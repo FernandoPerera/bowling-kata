@@ -1,12 +1,19 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public final class Player {
 
-    private int score = 0;
+    private final List<Integer> pinsKnockedDownByRolls = new ArrayList<>();
 
     public void roll(int pinsKnockedDown) {
-        score += pinsKnockedDown;
+        pinsKnockedDownByRolls.add(pinsKnockedDown);
     }
 
     public int score() {
-        return this.score;
+        boolean turnIsOver = pinsKnockedDownByRolls.size() % 2 == 0;
+
+        return turnIsOver
+                ? pinsKnockedDownByRolls.stream().reduce(0, Integer::sum)
+                : pinsKnockedDownByRolls.subList(0, pinsKnockedDownByRolls.size() - 1).stream().reduce(0, Integer::sum);
     }
 }
