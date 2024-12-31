@@ -12,8 +12,16 @@ public final class Player {
     public int score() {
         boolean turnIsOver = pinsKnockedDownByRolls.size() % 2 == 0;
 
-        return turnIsOver
-                ? pinsKnockedDownByRolls.stream().reduce(0, Integer::sum)
-                : pinsKnockedDownByRolls.subList(0, pinsKnockedDownByRolls.size() - 1).stream().reduce(0, Integer::sum);
+        if (turnIsOver) {
+            return lastTurnIsSpare()
+                    ? pinsKnockedDownByRolls.subList(0, pinsKnockedDownByRolls.size() - 2).stream().reduce(0, Integer::sum)
+                    : pinsKnockedDownByRolls.stream().reduce(0, Integer::sum);
+        }
+
+        return pinsKnockedDownByRolls.subList(0, pinsKnockedDownByRolls.size() - 1).stream().reduce(0, Integer::sum);
+    }
+
+    private boolean lastTurnIsSpare() {
+        return pinsKnockedDownByRolls.getLast() + pinsKnockedDownByRolls.get(pinsKnockedDownByRolls.size() - 2) == 10;
     }
 }
