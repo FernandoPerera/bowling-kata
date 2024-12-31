@@ -1,10 +1,12 @@
 public final class Player {
 
+    private int score = 0;
+
     public void roll(int pinsKnockedDown) {
-        throw new RuntimeException("Not implemented yet");
+        score += pinsKnockedDown;
     }
 
     public int score() {
-        throw new RuntimeException("Not implemented yet");
+        return this.score;
     }
 }
